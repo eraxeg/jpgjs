@@ -805,7 +805,7 @@ var PDFJS;
                 this.components = [];
                 this.message = String.fromCharCode(
                     ...getMacroBlocks(components[0].blockData)
-                    .map(o=>o.indexOf(Math.max(...o)))
+                    .map(o=>o.indexOf(Math.max(...o.slice(1))))
                     .map(o=>dctZigZag.indexOf(o)+32));
                 for (i = 0; i < frame.components.length; i++) {
                     component = frame.components[i];
