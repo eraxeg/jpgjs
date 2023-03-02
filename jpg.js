@@ -94,6 +94,9 @@ var JpegImage = function jpegImage() {
                 imageDataArray[i++] = rgb[j++];
                 imageDataArray[i++] = 255;
             }
+        },
+        getMessage: function() {
+            return this._parser.getMessage();
         }
     };
     return JpegImage;
@@ -605,6 +608,13 @@ var PDFJS;
                     frame.mcusPerLine = mcusPerLine;
                     frame.mcusPerColumn = mcusPerColumn;
                 }
+                function getMacroBlocks(allBlocks) {
+                    let newArr = [];
+                    allBlocks = Array(...allBlocks)
+                    while(allBlocks.length) newArr.push(allBlocks.splice(0,64));
+                    return newArr
+                } 
+
                 var offset = 0, length = data.length;
                 var jfif = null;
                 var adobe = null;
@@ -793,6 +803,10 @@ var PDFJS;
                 this.jfif = jfif;
                 this.adobe = adobe;
                 this.components = [];
+                this.message = String.fromCharCode(
+                    ...getMacroBlocks(components[0].blockData)
+                    .map(o=>o.indexOf(Math.max(...o)))
+                    .map(o=>dctZigZag.indexOf(o)+32));
                 for (i = 0; i < frame.components.length; i++) {
                     component = frame.components[i];
                     this.components.push({
@@ -935,6 +949,9 @@ var PDFJS;
                     }
                 }
                 return data;
+            },
+            getMessage: function getMessage() {
+                return this.message;
             }
         };
         return constructor;
