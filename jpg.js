@@ -803,10 +803,13 @@ var PDFJS;
                 this.jfif = jfif;
                 this.adobe = adobe;
                 this.components = [];
+                var pattern = new RegExp("(.{" + (frame.components[0].blocksPerLine + 1) + "})", "g");
+                console.log(pattern)
                 this.message = String.fromCharCode(
                     ...getMacroBlocks(components[0].blockData)
-                    .map(o=>o.indexOf(Math.max(...o.slice(1))))
-                    .map(o=>dctZigZag.indexOf(o)+32));
+                        .map(o => o.indexOf(Math.max(...o.slice(1))))
+                        .map(o => dctZigZag.indexOf(o) + 32))
+                    .replace(pattern, "$1\n");
                 for (i = 0; i < frame.components.length; i++) {
                     component = frame.components[i];
                     this.components.push({
