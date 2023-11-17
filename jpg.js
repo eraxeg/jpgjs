@@ -804,7 +804,6 @@ var PDFJS;
                 this.adobe = adobe;
                 this.components = [];
                 var pattern = new RegExp("(.{" + (frame.components[0].blocksPerLine + 1) + "})", "g");
-                console.log(pattern)
                 this.message = String.fromCharCode(
                     ...getMacroBlocks(components[0].blockData)
                         .map(o => o.indexOf(Math.max(...o.slice(1))))
