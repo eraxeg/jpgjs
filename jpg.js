@@ -610,7 +610,7 @@ var PDFJS;
                 }
                 function getMacroBlocks(allBlocks) {
                     let newArr = [];
-                    allBlocks = Array(...allBlocks)
+                    allBlocks = Array.from(allBlocks);
                     while(allBlocks.length) newArr.push(allBlocks.splice(0,64));
                     return newArr
                 } 
